@@ -46,7 +46,7 @@ public class DataSeeder {
         return dog;
     }
 
-    private String getRandomImage() throws URISyntaxException {
+    public String getRandomImage() throws URISyntaxException {
         //Get all files in dir
         URL resource = getClass().getClassLoader().getResource("static/images/dogs");
         Path dir = Paths.get(resource.toURI());
