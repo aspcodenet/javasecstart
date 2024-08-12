@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import se.systementor.javasecstart.model.Dog;
@@ -44,6 +45,18 @@ public class AdminDogController {
         dogRepository.save(newDog);
         model.addAttribute("dogs", dogService.getPublicDogs());
         return "admin/dogs/list";
+    }
+
+
+
+    @GetMapping(path="/admin/dogs/edit/{id}")
+    String list(@PathVariable long id, Model model){
+        Dog dog = dogRepository.findById(id).get();
+        model.addAttribute("activeFunction", "home");
+//        setupVersion(model);
+
+        model.addAttribute("dog", dog);
+        return "admin/dogs/edit";
     }
 
 

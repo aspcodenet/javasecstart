@@ -14,4 +14,8 @@ public class HomeController {
 
 //        model.addAttribute("dogs", dogRepository.findAll());
         return "home";
-    }}
+    }
+
+
+
+}
