@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="sv"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layouts/layouttemplate"
+      data-theme="light">
+
+
+<th:block layout:fragment="extraHead">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@1.5.0/event-calendar.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@event-calendar/build@1.5.0/event-calendar.min.js"></script>
+    <script src="/js/modal.js"></script>
+
+</th:block>
+
+<div layout:fragment="mainContent">
+
+    <div class="row-box">
+        <div class="col-boxes-1">
+            <div class="col-table">
+                <div class="table-section">
+                    <div class="header-table">
+                        <h2 th:text="'Edit Dog #' + ${dogId}" > </h2>
+
+                        <!--h2>Edit Dog</h2-->
+                        <!--                        <a href="#">see all</a>-->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <form th:action="@{admin/dog/add}" method="post" th:object="${dog}">
+            <input type="hidden" th:field="*{id}" />
+            <!--input type="hidden" name="redirect" th:value="${redirect}" /-->
+
+            <div class="row m-4">
+                <div class="col">
+                    <label>Name</label>
+                </div>
+                <div class="col d-flex align-items-center validation-parent">
+                    <input type="text" th:field="*{name}" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                </div>
+            </div>
+            <div class="row m-4">
+                <div class="col">
+                    <label>Breed</label>
+                </div>
+                <div class="col d-flex align-items-center validation-parent">
+                    <input type="text" th:field="*{breed}" th:classappend="${#fields.hasErrors('breed')} ? 'is-invalid' : ''">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('breed')}" th:errors="*{breed}"></div>
+                </div>
+            </div>
+            <div class="row m-4">
+                <div class="col">
+                    <label>Age</label>
+                </div>
+                <div class="col d-flex align-items-center validation-parent">
+                    <input type="text" th:field="*{age}" th:classappend="${#fields.hasErrors('age')} ? 'is-invalid' : ''">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+                </div>
+            </div>
+            <div class="row m-4">
+                <div class="col">
+                    <label>Size</label>
+                </div>
+                <div class="col d-flex align-items-center validation-parent">
+                    <input type of="text" th:field="*{size}" th:classappend="${#fields.hasErrors('size')} ? 'is-invalid' : ''">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></div>
+                </div>
+            </div>
+            <div class="row m-4">
+                <div class="col">
+                    <label>Price</label>
+                </div>
+                <div class="col d-flex align-items-center validation-parent">
+                    <input type="text" th:field="*{price}" th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                <div class="col-5">
+                </div>
+                <div class="col">
+                   <a> <button type="submit" class="btn btn-md btn-primary">Save</button></a>
+                </div>
+                <div class="col">
+                    <a href="/admin/dogs}" th:href="@{/admin/dogs}" class="btn btn-large btn-success">Cancel</a>
+                    <!--a>Cancel</a-->
+                    <!--a th:href="@{${cancelRedirect}}" class="btn btn-md btn-danger">Cancel</a-->
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+</html>
