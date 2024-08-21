@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title th:text="${pageTitle}">Stefans Webshop</title>
+    <title th:text="${pageTitle}">Hundshop</title>
 
     <link rel="icon" type="image/*" size="32*32" href="/images/rocket.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -47,7 +47,7 @@
                 </div>
                 <div sec:authorize="isAnonymous()" class="user-info">
                     <h2>Konto</h2>
-                    <a href="/scheduleadmin">
+                    <a href="/login">
                         <i class="fas fa-sign-out-alt"></i>
                         Logga in
                     </a>
