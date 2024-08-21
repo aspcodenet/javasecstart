@@ -27,7 +27,7 @@ public class UserService {
             throw new IllegalArgumentException("Användarnamnet är redan taget");
         }
         String encodedPassword = passwordEncoder.encode(password);
-        User newUser = new User(username, password);
+        User newUser = new User(username, encodedPassword);
 
         userRepository.save(newUser);
     }

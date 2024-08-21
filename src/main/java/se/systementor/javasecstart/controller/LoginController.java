@@ -1,6 +1,7 @@
 package se.systementor.javasecstart.controller;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +12,12 @@ import se.systementor.javasecstart.model.User;
 import se.systementor.javasecstart.services.UserService;
 
 @Controller
+@RequiredArgsConstructor
 
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+    //@Autowired
+    private final UserService userService;
 
     @GetMapping(path="/login")
     public String login(Model model) {
@@ -33,8 +35,6 @@ public class LoginController {
     @PostMapping("/regUser")
     public String regUser(@ModelAttribute User user, Model model) {
         try {
-            //System.out.println(user.getUsername());
-            //System.out.println(user.getPassword());
             userService.registerNewUser(user.getUsername(), user.getPassword());
             return "redirect:/login";
         } catch (IllegalArgumentException e) {

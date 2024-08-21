@@ -2,15 +2,12 @@ package se.systementor.javasecstart.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,9 +18,16 @@ public class User {
     @Column(name="id")
     private Long id;
 
+
+    @Column(nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
-    public User(String username, String encodedPassword) {
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
+
 }
