@@ -15,6 +15,7 @@ public class SeedDataRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         setupDogs();
         
     }
