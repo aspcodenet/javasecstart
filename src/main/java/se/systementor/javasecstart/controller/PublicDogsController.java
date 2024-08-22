@@ -28,12 +28,14 @@ public class PublicDogsController {
     public String searchDogs(@RequestParam(name = "q", required = false) String query, Model model) {
         List<Dog> allDogs = dogService.getPublicDogs();
 
-        if (query != null && !query.isEmpty()) {
+        String q = query.trim();
+
+        if (!query.isEmpty()) {
             List<Dog> filteredDogs = allDogs.stream()
-                    .filter(dog -> dog.getName().toLowerCase().contains(query.toLowerCase())
-                            || dog.getBreed().toLowerCase().contains(query.toLowerCase())
-                            || dog.getAge().toLowerCase().contains(query.toLowerCase())
-                            || String.valueOf(dog.getPrice()).contains(query))
+                    .filter(dog -> dog.getName().toLowerCase().contains(q.toLowerCase())
+                            || dog.getBreed().toLowerCase().contains(q.toLowerCase())
+                            || dog.getAge().toLowerCase().contains(q.toLowerCase())
+                            || String.valueOf(dog.getPrice()).contains(q))
                     .collect(Collectors.toList());
             model.addAttribute("dogs", filteredDogs);
         } else {
