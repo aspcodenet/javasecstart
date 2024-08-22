@@ -45,9 +45,10 @@
         </div>
     </div>
 
-    <form method="GET">
+    <form method="GET" action="/search">
         Search:
-        <input type="text" name="q" value="" />
+        <input type="text" name="q" th:value="${q}" />
+        <button type="submit">Search</button>
         <!-- <input type="hidden" name="sortCol"  value="<?php echo $sortCol; ?>" />       -->
     </form>
     <div class="cards dogcards">

@@ -7,4 +7,8 @@ import java.util.List;
 public interface DogRepository extends CrudRepository<Dog, Long> {
 
     List<Dog> findAllBySoldToIsNull();
+
+   // List<Dog> findAllByNameContainsOrBreedContainsOrAgeContainsOrPriceContains(
+   //         String name, String breed, String age, int price);
+
 }
