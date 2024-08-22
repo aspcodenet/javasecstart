@@ -93,8 +93,6 @@
             <td th:text="${dog.getPrice()}"></td>
             <td th:text="${dog.getId()}"></td>
             <td>
-
-                <!--a class="listbutton">Edit</a-->
             <a th:href="@{/admin/dogs/edit/{dogId}(dogId=${dog.getId()})}" class="listbutton">Edit</a>
             </td>
         </tr>
