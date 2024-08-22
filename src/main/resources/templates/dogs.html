@@ -46,11 +46,22 @@
     </div>
 
     <form method="GET" action="/search">
-        Search:
-        <input type="text" name="q" th:value="${q}" />
-        <button type="submit">Search</button>
-        <!-- <input type="hidden" name="sortCol"  value="<?php echo $sortCol; ?>" />       -->
+        <label for="query">Search:</label>
+        <input type="text" id="query" name="q" th:value="${q}" />
+
+        <label for="sortBy">Sort By:</label>
+        <select id="sortBy" name="sortBy">
+            <option value="name" th:selected="${sortBy == 'name'}">Name</option>
+            <option value="breed" th:selected="${sortBy == 'breed'}">Breed</option>
+            <option value="age" th:selected="${sortBy == 'age'}">Age</option>
+            <option value="price" th:selected="${sortBy == 'price'}">Price</option>
+        </select>
+
+        <button type="submit">Search & Sort</button>
     </form>
+
+
+
     <div class="cards dogcards">
         <div class="card dogcard" th:each="dog: ${dogs}">
             <div class="card-top-info">
@@ -61,8 +72,8 @@
 
                 <ul style="text-align: center">
                     <li th:text="${dog.getBreed()}"></li>
-            <li th:text="${dog.getAge()}"></li>
-            <li th:text="${dog.getPrice()}"> kr</li>
+                    <li th:text="${dog.getAge()}"></li>
+                    <li th:text="${dog.getPrice()}"> kr</li>
                 </ul>
             </p>
         </div>
