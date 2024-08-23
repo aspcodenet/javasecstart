@@ -32,8 +32,10 @@ public class DogService {
                     return dog.getBreed();
                 case "age":
                     return dog.getAge();
-                case "price":
-                    return dog.getPrice();
+                case "size":
+                    return dog.getSize();
+              //  case "price":
+              //      return dog.getPrice();
                 default:
                     return dog.getName();
             }

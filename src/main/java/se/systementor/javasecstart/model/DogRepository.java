@@ -9,7 +9,7 @@ public interface DogRepository extends CrudRepository<Dog, Long> {
 
     List<Dog> findAllBySoldToIsNull();
 
-    List<Dog> findAllByNameContainsOrBreedContainsOrAgeContainsOrPriceContains(
-            String name, String breed, String age, int price, Sort sort);
+    List<Dog> findAllByNameContainsOrBreedContainsOrAgeContainsOrSizeContains(
+            String name, String breed, String age, String size, Sort sort);
 
 }

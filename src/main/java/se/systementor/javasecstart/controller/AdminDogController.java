@@ -21,6 +21,7 @@ public class AdminDogController {
     @Autowired
     private DogService dogService;
 
+    @Autowired
     private DogRepository dogRepository;
     @GetMapping(path="/admin/dogs")
     String list(Model model, @RequestParam(defaultValue = "name") String sortCol,
@@ -31,11 +32,11 @@ public class AdminDogController {
 
         List<Dog> dogList;
 
-        int qint = Integer.parseInt(q);
+       // int qint = Integer.parseInt(q);
 
         if (!q.isEmpty()) {
-            List<Dog> filteredDogList = dogRepository.findAllByNameContainsOrBreedContainsOrAgeContainsOrPriceContains(q,
-                    q, q, qint, Sort.unsorted());
+            List<Dog> filteredDogList = dogRepository.findAllByNameContainsOrBreedContainsOrAgeContainsOrSizeContains(q,
+                    q, q, q,Sort.unsorted());
             dogList = new ArrayList<>(filteredDogList);
         } else {
             dogList = dogService.getPublicDogs();
