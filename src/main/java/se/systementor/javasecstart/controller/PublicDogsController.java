@@ -48,7 +48,6 @@ public class PublicDogsController {
                         || (finalPriceQuery.isPresent() && dog.getPrice() == finalPriceQuery.get()))
                 .collect(Collectors.toList());
 
-        // Sorting the filtered dogs
         List<Dog> sortedDogs = filteredDogs.stream()
                 .sorted(getComparator(sortBy))
                 .collect(Collectors.toList());
