@@ -12,4 +12,5 @@ public interface DogRepository extends CrudRepository<Dog, Long> {
     List<Dog> findAllByNameContainsOrBreedContainsOrAgeContainsOrSizeContains(
             String name, String breed, String age, String size, Sort sort);
 
+    List<Dog> findAllByPrice(Integer price, Sort sort);
 }

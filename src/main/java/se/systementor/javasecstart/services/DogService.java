@@ -16,7 +16,7 @@ public class DogService {
     @Autowired
     DogRepository dogRepository;
 
-    public List<Dog> getPublicDogs(){
+    public List<Dog> getPublicDogs() {
         return dogRepository.findAllBySoldToIsNull();
     }
 
@@ -24,31 +24,46 @@ public class DogService {
         Collator sortingCollator = Collator.getInstance(new Locale("sv", "SE"));
         sortingCollator.setStrength(Collator.PRIMARY);
 
-        Comparator<Dog> comparator = Comparator.comparing(dog -> {
-            switch (sortField.toLowerCase()) {
-                case "name":
-                    return dog.getName();
-                case "breed":
-                    return dog.getBreed();
-                case "age":
-                    return dog.getAge();
-                case "size":
-                    return dog.getSize();
-              //  case "price":
-              //      return dog.getPrice();
-                default:
-                    return dog.getName();
-            }
-        }, sortingCollator);
+        Comparator<Dog> comparator;
 
+        switch (sortField.toLowerCase()) {
+            case "name":
+                comparator = Comparator.comparing(Dog::getName, sortingCollator);
+                break;
+            case "breed":
+                comparator = Comparator.comparing(Dog::getBreed, sortingCollator);
+                break;
+            case "age":
+                comparator = Comparator.comparing(Dog::getAge, sortingCollator);
+                break;
+            case "size":
+                comparator = Comparator.comparing(Dog::getSize, sortingCollator);
+                break;
+            case "price":
+                comparator = Comparator.comparingInt(Dog::getPrice);
+                break;
+            default:
+                comparator = Comparator.comparing(Dog::getName, sortingCollator);
+                break;
+        }
 
         if ("DESC".equalsIgnoreCase(sortOrder)) {
             comparator = comparator.reversed();
         }
+
         List<Dog> sortableList = new ArrayList<>(dogs);
         sortableList.sort(comparator);
         dogs.clear();
         dogs.addAll(sortableList);
     }
+
+    public boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str.replace(" ", ""));
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
+}
 

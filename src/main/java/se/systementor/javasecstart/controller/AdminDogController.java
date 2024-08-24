@@ -23,36 +23,33 @@ public class AdminDogController {
 
     @Autowired
     private DogRepository dogRepository;
-    @GetMapping(path="/admin/dogs")
+
+    @GetMapping(path = "/admin/dogs")
     String list(Model model, @RequestParam(defaultValue = "name") String sortCol,
                 @RequestParam(defaultValue = "ASC") String sortOrder,
                 @RequestParam(defaultValue = "") String q) {
-
         q = q.trim();
 
         List<Dog> dogList;
 
-       // int qint = Integer.parseInt(q);
-
         if (!q.isEmpty()) {
-            List<Dog> filteredDogList = dogRepository.findAllByNameContainsOrBreedContainsOrAgeContainsOrSizeContains(q,
-                    q, q, q,Sort.unsorted());
-            dogList = new ArrayList<>(filteredDogList);
+            if (dogService.isNumeric(q)) {
+                Integer price = Integer.parseInt(q.replace(" ", ""));
+                dogList = dogRepository.findAllByPrice(price, Sort.unsorted());
+            } else {
+                dogList = dogRepository.findAllByNameContainsOrBreedContainsOrAgeContainsOrSizeContains(
+                        q, q, q, q, Sort.unsorted());
+            }
         } else {
             dogList = dogService.getPublicDogs();
         }
-        List <Dog> sortedList = new ArrayList<>(dogList);
 
-        dogService.sortDogs(sortedList, sortCol, sortOrder);
-       //  sortedList = dogService.sortDogs(sortedList, sortCol, sortOrder);
+        dogService.sortDogs(dogList, sortCol, sortOrder);
 
         model.addAttribute("activeFunction", "home");
-//        setupVersion(model);
-        model.addAttribute("dogs", sortedList);
+        model.addAttribute("dogs", dogList);
         model.addAttribute("q", q);
 
         return "admin/dogs/list";
     }
-
-
 }
