@@ -1,13 +1,13 @@
 package se.systementor.javasecstart.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import se.systementor.javasecstart.model.Dog;
 import se.systementor.javasecstart.model.DogRepository;
 import se.systementor.javasecstart.services.DogService;
@@ -27,7 +27,7 @@ public class AdminDogController {
 //        setupVersion(model);
 
         model.addAttribute("dogs", dogService.getPublicDogs());
-        return "admin/dogs/list";
+        return "/admin/dogs/list";
     }
 
     @RequestMapping("/admin/dogs/edit/{id}")
@@ -35,7 +35,25 @@ public class AdminDogController {
         model.addAttribute("dogId", id);
         Dog dog = dogRepo.findById((long) id).orElse(null);
         model.addAttribute("dog", dog);
-        return "admin/dogs/edit";
+        return "/admin/dogs/edit";
     }
 
+    @PostMapping("/admin/dogs/save")
+    //public String saveDog(@Valid @ModelAttribute("dog") Dog dog, BindingResult result, Model model, @RequestParam String redirect ) {
+    public String saveDog(@Valid @ModelAttribute("dog") Dog dog, BindingResult result, Model model) {
+
+        System.out.println("Save Dog..");
+        // System.out.println("red1: " + redirect);
+        if (result.hasErrors()) {
+            System.out.println("Form errrorr ");
+         /*   model.addAttribute("kat", "Lägg till ny kund");
+            model.addAttribute("titel", "Kund");
+            model.addAttribute("redirect", redirect);
+            model.addAttribute("cancelRedirect", redirect);*/
+            return "/admin/dogs/edit";
+        }
+        dogRepo.save(dog);
+        //return "redirect:" + redirect;
+        return "redirect:/admin/dogs";
+    }
 }

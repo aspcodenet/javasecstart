@@ -21,9 +21,6 @@
                 <div class="table-section">
                     <div class="header-table">
                         <h2 th:text="'Edit Dog #' + ${dogId}" > </h2>
-
-                        <!--h2>Edit Dog</h2-->
-                        <!--                        <a href="#">see all</a>-->
                     </div>
 
                 </div>
@@ -34,9 +31,12 @@
     </div>
 
     <div class="row">
-        <form th:action="@{admin/dog/add}" method="post" th:object="${dog}">
+        <form th:action="@{/admin/dogs/save}" method="post" th:object="${dog}">
             <input type="hidden" th:field="*{id}" />
-            <!--input type="hidden" name="redirect" th:value="${redirect}" /-->
+            <input type="hidden" th:field="*{gender}" />
+            <!--input type="hidden" th:field="*{soldTo}" /-->
+            <input type="hidden" th:field="*{image}" />
+            <!--input type="hidden" name="redirect" th:value="${redirect}"  /-->
 
             <div class="row m-4">
                 <div class="col">
@@ -90,12 +90,15 @@
                 <div class="col">
                    <a> <button type="submit" class="listbutton">Save</button></a>
 
+
                     <a th:href="@{/admin/dogs}" class="listbutton">Cancel</a>
                 </div>
+
                 <!--div class="col">
                     <a href="/admin/dogs}" th:href="@{/admin/dogs}" class="listbutton">Cancel</a>
                 </div-->
             </div>
+
         </form>
     </div>
 
