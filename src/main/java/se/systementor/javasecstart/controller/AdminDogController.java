@@ -61,7 +61,7 @@ public class AdminDogController {
         model.addAttribute("dogs", dogList);
         model.addAttribute("q", q);
 
-        model.addAttribute("dogs", dogService.getPublicDogs());
+      //  model.addAttribute("dogs", dogService.getPublicDogs());
         return "/admin/dogs/list";
     }
 
