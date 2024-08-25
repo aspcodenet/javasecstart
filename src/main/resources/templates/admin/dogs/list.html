@@ -52,33 +52,33 @@
     <br/><br/>
     <form method="GET">
         Search:
-        <input type="text" name="q" value="" />
+        <input type="text" name="q" th:value="${q}" />
     </form>
     <table class="tabulator-table">
         <thead>
         <tr class="tabulator-row">
             <th class="tabulator-cell">
                 Name
-                <a href="?"><i class="fa-solid fa-arrow-up-a-z"></i></a>
-                <a href="?"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=name&sortOrder=asc|}"><i class="fa-solid fa-arrow-up-a-z"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=name&sortOrder=desc|}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
             </th>
 
             <th >
                 Breed
-                <a href="?"><i class="fa-solid fa-arrow-up-a-z"></i></a>
-                <a href="?"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=breed&sortOrder=asc|}" class="fa-solid fa-arrow-up-a-z"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=breed&sortOrder=desc|}" class="fa-solid fa-arrow-down-z-a"></i></a>
             </th>
             <th>Age
-                <a href="?"><i class="fa-solid fa-arrow-up-a-z"></i></a>
-                <a href="?"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=age&sortOrder=asc|}" class="fa-solid fa-arrow-up-a-z"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=age&sortOrder=desc|}" class="fa-solid fa-arrow-down-z-a"></i></a>
             </th>
             <th>Size
-                <a href="?"><i class="fa-solid fa-arrow-up-a-z"></i></a>
-                <a href="?"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=size&sortOrder=asc|}" class="fa-solid fa-arrow-up-a-z"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=size&sortOrder=desc|}" class="fa-solid fa-arrow-down-z-a"></i></a>
             </th>
             <th>Price
-                <a href="?"><i class="fa-solid fa-arrow-up-a-z"></i></a>
-                <a href="?"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=price&sortOrder=asc|}" class="fa-solid fa-arrow-up-a-z"></i></a>
+                <a th:href="@{|?q=${q}&sortCol=price&sortOrder=desc|}" class="fa-solid fa-arrow-down-z-a"></i></a>
             </th>
             <th></th>
         </tr>
