@@ -13,8 +13,6 @@ import se.systementor.javasecstart.model.Dog;
 import se.systementor.javasecstart.model.DogRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import se.systementor.javasecstart.model.Dog;
-import se.systementor.javasecstart.model.DogRepository;
 import se.systementor.javasecstart.services.DogService;
 
 import java.util.ArrayList;
@@ -31,16 +29,16 @@ public class AdminDogController {
 
     private final DogRepository dogRepo;
 
-    @GetMapping(path="/admin/dogs")
-    String list(Model model){
+  /*  @GetMapping(path="/admin/dogs")
+    String list(Model model) {*/
 
-    @Autowired
-    private DogRepository dogRepository;
+ /*   @Autowired
+    private DogRepository dogRepository;*/
 
     @GetMapping(path = "/admin/dogs")
-    String list(Model model, @RequestParam(defaultValue = "name") String sortCol,
-                @RequestParam(defaultValue = "ASC") String sortOrder,
-                @RequestParam(defaultValue = "") String q) {
+    String list (Model model, @RequestParam(defaultValue = "name") String sortCol,
+            @RequestParam(defaultValue = "ASC") String sortOrder,
+            @RequestParam(defaultValue = "") String q){
         q = q.trim();
 
         List<Dog> dogList;
@@ -48,9 +46,9 @@ public class AdminDogController {
         if (!q.isEmpty()) {
             if (dogService.isNumeric(q)) {
                 Integer price = Integer.parseInt(q.replace(" ", ""));
-                dogList = dogRepository.findAllByPrice(price, Sort.unsorted());
+                dogList = dogRepo.findAllByPrice(price, Sort.unsorted());
             } else {
-                dogList = dogRepository.findAllByNameContainsOrBreedContainsOrAgeContainsOrSizeContains(
+                dogList = dogRepo.findAllByNameContainsOrBreedContainsOrAgeContainsOrSizeContains(
                         q, q, q, q, Sort.unsorted());
             }
         } else {
@@ -66,6 +64,7 @@ public class AdminDogController {
         model.addAttribute("dogs", dogService.getPublicDogs());
         return "/admin/dogs/list";
     }
+
 
     @RequestMapping("/admin/dogs/edit/{id}")
     public String editDog(@PathVariable int id, Model model){
