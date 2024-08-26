@@ -21,7 +21,7 @@ public class DogService {
     }
 
     public void sortDogs(List<Dog> dogs, String sortField, String sortOrder) {
-        Collator sortingCollator = Collator.getInstance(new Locale("sv", "SE"));
+        Collator sortingCollator = Collator.getInstance(Locale.ENGLISH);    //("sv", "SE")
         sortingCollator.setStrength(Collator.PRIMARY);
 
         Comparator<Dog> comparator;
@@ -34,10 +34,15 @@ public class DogService {
                 comparator = Comparator.comparing(Dog::getBreed, sortingCollator);
                 break;
             case "age":
-                comparator = Comparator.comparing(Dog::getAge, sortingCollator);
+                comparator = new Comparator<Dog>() {          //icke lambda showcase
+                    @Override
+                    public int compare(Dog o1, Dog o2) {
+                        return Integer.compare(getAgeCategoryPrio(o1.getAge()), getAgeCategoryPrio(o2.getAge()));
+                    }
+                };
                 break;
             case "size":
-                comparator = Comparator.comparing(Dog::getSize, sortingCollator);
+                comparator = (o1, o2) -> Integer.compare(getSizeCategoryPrio(o1.getSize()), getSizeCategoryPrio(o2.getSize()));
                 break;
             case "price":
                 comparator = Comparator.comparingInt(Dog::getPrice);
@@ -59,11 +64,44 @@ public class DogService {
 
     public boolean isNumeric(String str) {
         try {
-            Integer.parseInt(str.replace(" ", ""));
+            Integer.parseInt(str);
             return true;
         } catch (NumberFormatException e) {
             return false;
         }
     }
+
+
+    private int getAgeCategoryPrio(String age) {
+        switch (age.toLowerCase()) {
+            case "puppy":
+                return 1;
+            case "young":
+                return 2;
+            case "adult":
+                return 3;
+            case "senior":
+                return 4;
+            default:
+                return Integer.MAX_VALUE;
+        }
+    }
+
+        private int getSizeCategoryPrio (String size){
+            switch (size.toLowerCase()) {
+                case "small":
+                    return 1;
+                case "medium":
+                    return 2;
+                case "large":
+                    return 3;
+                case "extra large":
+                    return 4;
+                default:
+                    return Integer.MAX_VALUE;
+
+
+            }
+        }
 }
 

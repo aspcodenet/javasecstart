@@ -49,7 +49,7 @@ public class AdminDogController {
 
         if (!q.isEmpty()) {
             if (dogService.isNumeric(q)) {
-                Integer price = Integer.parseInt(q.replace(" ", ""));
+                Integer price = Integer.parseInt(q);
                 dogList = dogRepo.findAllByPrice(price, Sort.unsorted());
             } else {
                 dogList = dogRepo.findAllByNameContainsOrBreedContainsOrAgeContainsOrSizeContains(
