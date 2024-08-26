@@ -21,7 +21,7 @@ public class DogService {
     }
 
     public void sortDogs(List<Dog> dogs, String sortField, String sortOrder) {
-        Collator sortingCollator = Collator.getInstance(new Locale("sv", "SE"));
+        Collator sortingCollator = Collator.getInstance(Locale.ENGLISH);    //("sv", "SE")
         sortingCollator.setStrength(Collator.PRIMARY);
 
         Comparator<Dog> comparator;
@@ -59,7 +59,7 @@ public class DogService {
 
     public boolean isNumeric(String str) {
         try {
-            Integer.parseInt(str.replace(" ", ""));
+            Integer.parseInt(str);
             return true;
         } catch (NumberFormatException e) {
             return false;
