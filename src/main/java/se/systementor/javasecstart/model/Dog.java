@@ -42,7 +42,7 @@ public class Dog {
     private String name;
 
     @NotBlank(message = "Enter size")
-    @Pattern(regexp = "(^$|^[A-Za-zåäöÅÄÖ]+$)", message = "Size can only contain letters")
+    @Pattern(regexp = "(^$|^[A-Za-zåäöÅÄÖ ]+$)", message = "Size can only contain letters")
     @Size(max = 20, message = "Max 20 characters")
     @Column(name="Size", nullable = false)
     private String size;
@@ -72,8 +72,8 @@ public class Dog {
         return gender;
     }
 
-    public void setGender(String hender) {
-        this.gender = hender;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getBreed() {

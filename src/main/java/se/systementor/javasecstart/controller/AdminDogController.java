@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import se.systementor.javasecstart.services.DogService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,6 +29,8 @@ public class AdminDogController {
     private DogService dogService;
 
     private final DogRepository dogRepo;
+
+    List<String> genders_List = Arrays.asList("male","female","neutered male", "spayed female");
 
   /*  @GetMapping(path="/admin/dogs")
     String list(Model model) {*/
@@ -42,6 +45,7 @@ public class AdminDogController {
         q = q.trim();
 
         List<Dog> dogList;
+
 
         if (!q.isEmpty()) {
             if (dogService.isNumeric(q)) {
@@ -68,9 +72,11 @@ public class AdminDogController {
 
     @RequestMapping("/admin/dogs/edit/{id}")
     public String editDog(@PathVariable int id, Model model){
+
         model.addAttribute("dogId", id);
         Dog dog = dogRepo.findById((long) id).orElse(null);
         model.addAttribute("dog", dog);
+        model.addAttribute("genders", genders_List);
         return "/admin/dogs/edit";
     }
 
@@ -82,14 +88,15 @@ public class AdminDogController {
         // System.out.println("red1: " + redirect);
         if (result.hasErrors()) {
             System.out.println("Form errrorr ");
+            model.addAttribute("genders", genders_List);
          /*   model.addAttribute("kat", "Lägg till ny kund");
             model.addAttribute("titel", "Kund");
             model.addAttribute("redirect", redirect);
             model.addAttribute("cancelRedirect", redirect);*/
             return "/admin/dogs/edit";
         }
+        System.out.println("Edited Dog gender.."+dog.getGender());
         dogRepo.save(dog);
-        //return "redirect:" + redirect;
         return "redirect:/admin/dogs";
     }
 }

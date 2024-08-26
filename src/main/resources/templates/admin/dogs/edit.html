@@ -33,7 +33,7 @@
     <div class="row">
         <form th:action="@{/admin/dogs/save}" method="post" th:object="${dog}">
             <input type="hidden" th:field="*{id}" />
-            <input type="hidden" th:field="*{gender}" />
+            <!--input type="hidden" th:field="*{gender}" /-->
             <!--input type="hidden" th:field="*{soldTo}" /-->
             <input type="hidden" th:field="*{image}" />
             <!--input type="hidden" name="redirect" th:value="${redirect}" /-->
@@ -82,6 +82,18 @@
                     <input type="text" th:field="*{price}" th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''">
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
                 </div>
+            </div>
+
+            <div class="row m-4">
+                <label for="gender_drop_down">Gender:</label>
+                <!--input type="text" th:field="*{price}" th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''"-->
+                <!--select class="form-control" id="gender_drop_down" name="gender"-->
+                <select th:field="*{gender}" class="form-control" id="gender_drop_down" name="genderD">
+                    <option th:each="gend : ${genders}"
+                            th:value="${gend}"
+                            th:text="${gend}"
+                            th:selected="${dog.gender==gend}"/>
+                </select>
             </div>
 
             <div class="row m-4">
