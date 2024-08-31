@@ -1,6 +1,7 @@
 package se.systementor.javasecstart.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name="Dog")
@@ -10,26 +11,40 @@ public class Dog {
     @Column(name="Id")
     private int id;
 
-    @Column(name="Age")
+    @NotBlank(message = "Enter age")
+    @Pattern(regexp="(^$|^[A-Za-zåäöÅÄÖ0-9 ]+$)", message= "Only letters and numbers")
+    @Size(max = 20, message = "Max 20 long")
+    @Column(name="Age", nullable = false)
     private String age;
 
     @Column(name="Gender")
     private String gender;
 
-    @Column(name = "Breed")
+    @NotBlank(message = "Enter breed")
+    @Pattern(regexp="(^$|^[A-Za-zåäöÅÄÖ ]+$)", message= "Only letters")
+    @Size(max = 30, message = "Max 30 characters")
+    @Column(name = "Breed", nullable = false)
     private String breed;
 
     @Column(name="SoldTo")
     private String soldTo;
 
-
+    @NotNull(message = "Enter price")
+    @Min(value=1, message="Price must be higher than 0")
+    @Max(value=9999999, message="Price must be lower than 10000000")
     @Column(name="Price")
     private int price;
 
-    @Column(name="Name")
+    @NotBlank(message = "Enter name")
+    @Pattern(regexp = "(^$|^[A-Za-zåäöÅÄÖ ]+$)", message = "Name can only contain letters")
+    @Size(max = 50, message = "Max 50 characters")
+    @Column(name="Name", nullable = false)
     private String name;
 
-    @Column(name="Size")
+    @NotBlank(message = "Enter size")
+    @Pattern(regexp = "(^$|^[A-Za-zåäöÅÄÖ ]+$)", message = "Size can only contain letters")
+    @Size(max = 20, message = "Max 20 characters")
+    @Column(name="Size", nullable = false)
     private String size;
 
 
@@ -57,8 +72,8 @@ public class Dog {
         return gender;
     }
 
-    public void setGender(String hender) {
-        this.gender = hender;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getBreed() {

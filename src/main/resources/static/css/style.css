@@ -10,7 +10,7 @@
 
 :root {
     --main-font: 'Nunito Sans', 'Karla', sans-serif;
-    --first-color: rgb(9, 72, 179);
+    --first-color: rgb(181, 10, 10);
 }
 
 body {
@@ -958,15 +958,13 @@ footer ul li a:hover {
 
 }
 
-
-
 .listbutton  {
     display: inline-block;
     text-align: center;
     color: #fff;
     background-color: var(--first-color);
     box-shadow: 0 2px 18px rgba(0, 0, 0, .02);
-    border: 0.0625rem solid var(--first-color);
+    border: 0.0625rem solid #590000;
     padding: 0.25rem 0.5rem;
     font-size: .875rem;
     font-weight: 600;
