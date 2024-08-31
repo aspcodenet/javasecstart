@@ -33,7 +33,7 @@ public class AdminDogController {
     List<String> genders_List = Arrays.asList("male","female","neutered male", "spayed female");
 
   /*  @GetMapping(path="/admin/dogs")
-    String list(Model model) {*/
+    String list(Model model) {*/   //test
 
  /*   @Autowired
     private DogRepository dogRepository;*/
