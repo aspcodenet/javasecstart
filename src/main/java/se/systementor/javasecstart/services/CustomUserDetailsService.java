@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import se.systementor.javasecstart.model.User;
 import se.systementor.javasecstart.model.UserRepository;
 
-@Service
+/*@Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -26,4 +26,4 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .roles("USER")
                 .build();
     }
-}
+}*/

@@ -1,59 +1,126 @@
 package se.systementor.javasecstart.services;
 
 
-import groovy.transform.Final;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import se.systementor.javasecstart.exception.UserAlreadyExistsException;
 import se.systementor.javasecstart.model.User;
 import se.systementor.javasecstart.model.UserRepository;
+import se.systementor.javasecstart.registration.password.PasswordResetTokenService;
+import se.systementor.javasecstart.registration.token.VerificationToken;
+import se.systementor.javasecstart.registration.token.VerificationTokenRepository;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements IUserService{
 
-    //@Autowired
     private final UserRepository userRepository;
-    //@Autowired
+    private final VerificationTokenRepository tokenRepository;
+    private final PasswordResetTokenService passwordResetTokenService;
     private final PasswordEncoder passwordEncoder;
+    @Override
+    public List<User> getUsers() { return userRepository.findAll(); }
 
-    public void registerNewUser(String username, String password) {
-        System.out.println(username);
-        System.out.println(password);
-        if (userRepository.findByUsername(username) != null) {
-            throw new IllegalArgumentException("Användarnamnet är redan taget");
+    /*@Override
+    public User registerUser(RegistrationRequest request) {
+        Optional<User> user = this.findByEmail(request.email());
+        if(user.isPresent()){
+            throw new UserAlreadyExistsException("User with email " + request.email() + " already exists");
         }
-        String encodedPassword = passwordEncoder.encode(password);
-        User newUser = new User(username, encodedPassword);
+        var newUser = new User();
+        newUser.setFirstName(request.firstName());
+        newUser.setLastName(request.lastName());
+        newUser.setEmail(request.email());
+        newUser.setPassword(passwordEncoder.encode(request.password()));
+        newUser.setRole(request.role());
+        return userRepository.save(newUser);
+    }*/
 
-        userRepository.save(newUser);
+    @Override
+    public String registerUser(String email, String firstName, String lastName, String password){
+        Optional<User> user = this.findByEmail(email);
+        if(user.isPresent()){
+            throw new UserAlreadyExistsException("User with email " + email + " already exists");
+        }
+        /*User newUser = new User();
+        newUser.setFirstName(firstName);
+        System.out.println(firstName);
+        newUser.setLastName(lastName);
+        System.out.println(lastName);
+        newUser.setEmail(email);
+        System.out.println(email);
+        newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setRole("USER");
+        userRepository.save(newUser);*/
+        return "test";
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    @Override
+    public void saveUserVerificationToken(User user, String token) {
+        if (user.getId() == null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRole("USER");
+            userRepository.save(user);
+        }
+        var verificationToken = new VerificationToken(token, user);
+        tokenRepository.save(verificationToken);
+
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    @Override
+    public String validateToken(String theToken) {
+        VerificationToken token = tokenRepository.findByToken(theToken);
+        if(token == null){
+            return "Invalid verification token.";
+        }
+        User user = token.getUser();
+        Calendar calendar = Calendar.getInstance();
+        if((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0){
+            return "Verification link already expired, please click the link below to receive a new verification link.";
+        }
+        user.setEnabled(true);
+        userRepository.save(user);
+        return "valid";
     }
 
-    public User updateUser(Long id, User user) {
-        user.setId(id);
-        return userRepository.save(user);
+    @Override
+    public VerificationToken generateNewVerificationToken(String oldToken) {
+        VerificationToken verificationToken = tokenRepository.findByToken(oldToken);
+        VerificationToken verificationTokenTime = new VerificationToken();
+        verificationToken.setToken(UUID.randomUUID().toString());
+        verificationToken.setExpirationTime(verificationTokenTime.getTokenExpirationTime());
+        return tokenRepository.save(verificationToken);
     }
 
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    @Override
+    public void createPasswordResetTokenForUser(User user, String passwordToken) {
+        passwordResetTokenService.createPasswordResetTokenForUser(user, passwordToken);
     }
 
+    @Override
+    public String validatePasswordResetToken(String passwordResetToken) {
+        return passwordResetTokenService.validatePasswordResetToken(passwordResetToken);
+    }
+
+    @Override
+    public User findUserByPasswordToken(String passwordResetToken) {
+        return passwordResetTokenService.findUserByPasswordToken(passwordResetToken).get();
+    }
+
+    @Override
+    public void resetUserPassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }

@@ -26,7 +26,7 @@
 
         <form th:action="@{/login}" method="post">
             <div class="mb-3">
-                <input type="text" name="username" class="form-control" placeholder="Användarnamn" required />
+                <input type="text" name="email" class="form-control" placeholder="Email" required />
             </div>
             <div class="mb-3">
                 <input type="password" name="password" class="form-control" placeholder="Lösenord" required />
@@ -36,7 +36,7 @@
                 <a th:href="@{/}" class="btn btn-danger w-100">Avbryt</a>
             </div>
             <div class="text-center">
-                <a th:href="@{/regUser}" class="btn btn-secondary mt-2">Skapa konto</a>
+                <a th:href="@{/register/new}" class="btn btn-secondary mt-2">Skapa konto</a>
             </div>
         </form>
     </div>
