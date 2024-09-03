@@ -12,21 +12,24 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService2 {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByEmail(email);
-        //User user = userRepository.findByEmail2(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("Användaren hittas inte: " + email);
-        }
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println(username);
+        Optional<User> optionalUser = userRepository.findByEmail(username);
+        //System.out.println(username);
+        User user = optionalUser.orElseThrow(() ->
+                new UsernameNotFoundException("Användaren hittas inte: " + username)
+        );
+
+        // Return UserDetails with retrieved user data
         return org.springframework.security.core.userdetails.User.builder()
-                .username(user.get().getEmail())
-                .password(user.get().getPassword())
-                .roles("USER")
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .roles("USER")  // Adjust roles as needed
                 .build();
     }
 }
