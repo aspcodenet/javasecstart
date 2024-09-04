@@ -59,8 +59,16 @@ dependencies {
 
     // Replace outdated mail dependency with updated ones
     implementation("org.springframework.boot:spring-boot-starter-mail")
-    implementation("com.sun.mail:jakarta.mail:2.0.1")
-    implementation("jakarta.activation:jakarta.activation-api:2.0.1")
+    // implementation("com.sun.mail:jakarta.mail:2.0.1")
+    // implementation("jakarta.activation:jakarta.activation-api:2.0.1")
+    //implementation("com.sun.mail:jakarta.mail")
+    // https://mvnrepository.com/artifact/org.eclipse.angus/jakarta.mail
+    implementation ("org.eclipse.angus:jakarta.mail:2.0.3")
+
+    // https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api
+    implementation ("jakarta.mail:jakarta.mail-api:2.1.3")
+
+    implementation("jakarta.activation:jakarta.activation-api")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.mysql:mysql-connector-j")

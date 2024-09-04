@@ -51,7 +51,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
                 "<p> Tack <br> Stefans Hundhem.";
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message);
-        messageHelper.setFrom("o.ekstrom@hotmail.se", senderName);
+        messageHelper.setFrom("pontus.lundin@yh.nackademin.se", senderName);
         messageHelper.setTo(theUser.getEmail());
         messageHelper.setSubject(subject);
         messageHelper.setText(mailContent, true);
@@ -69,7 +69,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
                 "<p> Tack <br> Stefans Hundhem.";
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message);
-        messageHelper.setFrom("o.ekstrom@hotmail.se", senderName);
+        messageHelper.setFrom("pontus.lundin@yh.nackademin.se", senderName);
         messageHelper.setTo(user.getEmail());
         messageHelper.setSubject(subject);
         messageHelper.setText(mailContent, true);
