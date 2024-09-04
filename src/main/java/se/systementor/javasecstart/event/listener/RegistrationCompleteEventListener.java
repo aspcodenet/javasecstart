@@ -25,10 +25,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
 
     private final UserService userService;
     private final JavaMailSender mailSender;
-
     private User theUser;
-
-
 
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent event) {
@@ -42,7 +39,6 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
             throw new RuntimeException(e);
         }
         log.info("Click the link to complete your registration : {}", url);
-
     }
 
     public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
@@ -79,6 +75,5 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         messageHelper.setText(mailContent, true);
         mailSender.send(message);
     }
-
 
 }

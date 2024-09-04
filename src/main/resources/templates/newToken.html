@@ -19,9 +19,7 @@
         <div th:if="${param.error}" class="alert alert-danger text-center">
             Felaktigt användarnamn
         </div>
-
         <div class="text-center mt-3">
-            <!-- The token is used here -->
             <a th:href="@{/register/resend-verification-token(token=${token})}" class="btn btn-link">Skicka ny länk</a>
         </div>
     </div>

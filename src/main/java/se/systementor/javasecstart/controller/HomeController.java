@@ -10,8 +10,5 @@ public class HomeController {
     String empty(Model model)
     {
         model.addAttribute("activeFunction", "home");
-//        setupVersion(model);
-
-//        model.addAttribute("dogs", dogRepository.findAll());
         return "home";
     }}

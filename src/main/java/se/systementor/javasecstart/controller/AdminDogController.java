@@ -27,16 +27,8 @@ public class AdminDogController {
 
     @Autowired
     private DogService dogService;
-
     private final DogRepository dogRepo;
-
     List<String> genders_List = Arrays.asList("male","female","neutered male", "spayed female");
-
-  /*  @GetMapping(path="/admin/dogs")
-    String list(Model model) {*/   //test
-
- /*   @Autowired
-    private DogRepository dogRepository;*/
 
     @GetMapping(path = "/admin/dogs")
     String list (Model model, @RequestParam(defaultValue = "name") String sortCol,
@@ -45,7 +37,6 @@ public class AdminDogController {
         q = q.trim();
 
         List<Dog> dogList;
-
 
         if (!q.isEmpty()) {
             if (dogService.isNumeric(q)) {
@@ -65,7 +56,6 @@ public class AdminDogController {
         model.addAttribute("dogs", dogList);
         model.addAttribute("q", q);
 
-      //  model.addAttribute("dogs", dogService.getPublicDogs());
         return "/admin/dogs/list";
     }
 
@@ -81,18 +71,12 @@ public class AdminDogController {
     }
 
     @PostMapping("/admin/dogs/save")
-    //public String saveDog(@Valid @ModelAttribute("dog") Dog dog, BindingResult result, Model model, @RequestParam String redirect ) {
     public String saveDog(@Valid @ModelAttribute("dog") Dog dog, BindingResult result, Model model) {
 
         System.out.println("Save Dog..");
-        // System.out.println("red1: " + redirect);
         if (result.hasErrors()) {
             System.out.println("Form errrorr ");
             model.addAttribute("genders", genders_List);
-         /*   model.addAttribute("kat", "Lägg till ny kund");
-            model.addAttribute("titel", "Kund");
-            model.addAttribute("redirect", redirect);
-            model.addAttribute("cancelRedirect", redirect);*/
             return "/admin/dogs/edit";
         }
         System.out.println("Edited Dog gender.."+dog.getGender());

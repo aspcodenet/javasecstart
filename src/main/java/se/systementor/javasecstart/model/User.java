@@ -38,7 +38,6 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
-    //@NaturalId(mutable = true)
     private String email;
     private String password;
     private String role;
@@ -47,9 +46,4 @@ public class User {
     public boolean isPresent() {
         return true;
     }
-
-    /*public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }*/
 }

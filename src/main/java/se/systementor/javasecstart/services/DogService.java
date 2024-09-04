@@ -21,7 +21,7 @@ public class DogService {
     }
 
     public void sortDogs(List<Dog> dogs, String sortField, String sortOrder) {
-        Collator sortingCollator = Collator.getInstance(Locale.ENGLISH);    //("sv", "SE")
+        Collator sortingCollator = Collator.getInstance(Locale.ENGLISH);
         sortingCollator.setStrength(Collator.PRIMARY);
 
         Comparator<Dog> comparator;

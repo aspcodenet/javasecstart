@@ -2,7 +2,6 @@ package se.systementor.javasecstart.services;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.systementor.javasecstart.exception.UserAlreadyExistsException;
@@ -25,23 +24,7 @@ public class UserService implements IUserService{
     private final VerificationTokenRepository tokenRepository;
     private final PasswordResetTokenService passwordResetTokenService;
     private final PasswordEncoder passwordEncoder;
-    @Override
-    public List<User> getUsers() { return userRepository.findAll(); }
 
-    /*@Override
-    public User registerUser(RegistrationRequest request) {
-        Optional<User> user = this.findByEmail(request.email());
-        if(user.isPresent()){
-            throw new UserAlreadyExistsException("User with email " + request.email() + " already exists");
-        }
-        var newUser = new User();
-        newUser.setFirstName(request.firstName());
-        newUser.setLastName(request.lastName());
-        newUser.setEmail(request.email());
-        newUser.setPassword(passwordEncoder.encode(request.password()));
-        newUser.setRole(request.role());
-        return userRepository.save(newUser);
-    }*/
 
     @Override
     public String registerUser(String email, String firstName, String lastName, String password){
@@ -49,16 +32,6 @@ public class UserService implements IUserService{
         if(user.isPresent()){
             throw new UserAlreadyExistsException("User with email " + email + " already exists");
         }
-        /*User newUser = new User();
-        newUser.setFirstName(firstName);
-        System.out.println(firstName);
-        newUser.setLastName(lastName);
-        System.out.println(lastName);
-        newUser.setEmail(email);
-        System.out.println(email);
-        newUser.setPassword(passwordEncoder.encode(password));
-        newUser.setRole("USER");
-        userRepository.save(newUser);*/
         return "test";
     }
 
@@ -76,7 +49,6 @@ public class UserService implements IUserService{
         }
         var verificationToken = new VerificationToken(token, user);
         tokenRepository.save(verificationToken);
-
     }
 
     @Override
@@ -123,11 +95,6 @@ public class UserService implements IUserService{
     public void resetUserPassword(User user, String newPassword) {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-    }
-
-    public User loadUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
     public boolean checkIfTokenExist(User user) {

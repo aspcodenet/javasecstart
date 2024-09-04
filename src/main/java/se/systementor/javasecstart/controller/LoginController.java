@@ -72,16 +72,7 @@ public class LoginController {
 
         User user = userService.findByEmail(email).get();
 
-        /*if (error != null) {
-            model.addAttribute("error", "Felaktigt användarnamn eller lösenord");
-        }
-
-        if (logout != null) {
-            model.addAttribute("logout", "Du har blivit utloggad");
-        }*/
-
-        return "login"; // Returns the Thymeleaf template named 'login'
+        return "login";
     }
 
-    // Add other endpoints or methods as necessary
 }
