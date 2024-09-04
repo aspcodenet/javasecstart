@@ -130,4 +130,7 @@ public class UserService implements IUserService{
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
+    public boolean checkIfTokenExist(User user) {
+        return false;
+    }
 }
