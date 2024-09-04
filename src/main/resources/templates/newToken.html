@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="sv"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layouts/layouttemplate"
+      data-theme="light">
+
+<th:block layout:fragment="extraHead">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@1.5.0/event-calendar.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@event-calendar/build@1.5.0/event-calendar.min.js"></script>
+    <script src="/js/modal.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</th:block>
+
+<section layout:fragment="mainContent" class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%;">
+        <h1 class="text-center mb-4">Tiden för din länk har löpt ut.</h1>
+
+        <div th:if="${param.error}" class="alert alert-danger text-center">
+            Felaktigt användarnamn
+        </div>
+
+        <div class="text-center mt-3">
+            <!-- The token is used here -->
+            <a th:href="@{/register/resend-verification-token(token=${token})}" class="btn btn-link">Skicka ny länk</a>
+        </div>
+    </div>
+</section>
+
+</html>

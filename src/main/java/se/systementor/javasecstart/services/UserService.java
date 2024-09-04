@@ -2,6 +2,7 @@ package se.systementor.javasecstart.services;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.systementor.javasecstart.exception.UserAlreadyExistsException;
@@ -123,4 +124,10 @@ public class UserService implements IUserService{
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
+
+    public User loadUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    }
+
 }

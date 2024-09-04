@@ -24,6 +24,21 @@
             Du har blivit utloggad
         </div>
 
+        <!--<form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <input type="text" name="email" class="form-control" placeholder="Email" required />
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control" placeholder="Lösenord" required />
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <button type="submit" class="btn btn-primary w-100 me-2">Bekräfta</button>
+                <a th:href="@{/}" class="btn btn-danger w-100">Avbryt</a>
+            </div>
+            <div class="text-center">
+                <a th:href="@{/register/new}" class="btn btn-secondary mt-2">Skapa konto</a>
+            </div>
+        </form>-->
         <form th:action="@{/login}" method="post">
             <div class="mb-3">
                 <input type="text" name="email" class="form-control" placeholder="Email" required />

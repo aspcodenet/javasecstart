@@ -18,6 +18,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,7 +50,7 @@ public class RegistrationController {
             userService.registerUser(user.getEmail(), user.getFirstName(), user.getLastName(), user.getPassword());
             System.out.println(user.getFirstName() + " " + user.getLastName());
             publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-            return "redirect:/login";
+            return "linkSent";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             return "/registerUser";
@@ -68,11 +69,16 @@ public class RegistrationController {
     }*/
 
     @GetMapping("/verifyEmail")
-    public String verifyEmail(@RequestParam("token") String token){
+    public String verifyEmail(@RequestParam("token") String token, Model model){
         String url = applicationUrl(servletRequest) + "/register/resend-verification-token?token=" + token;
         VerificationToken theToken = tokenRepository.findByToken(token);
         if (theToken.getUser().isEnabled()){
-            return "Your account has already been verified, please log in.";
+            return "verified";
+        }
+        Calendar calendar = Calendar.getInstance();
+        if(theToken.getExpirationTime().getTime() - calendar.getTime().getTime() <=0 && !theToken.getUser().isEnabled()){
+            model.addAttribute("token", token);
+            return "newToken";
         }
         String verificationResult = userService.validateToken(token);
         if(verificationResult.equalsIgnoreCase("valid")){
@@ -86,8 +92,16 @@ public class RegistrationController {
         VerificationToken verificationToken = userService.generateNewVerificationToken(oldToken);
         User theUser = verificationToken.getUser();
         resendVerificationTokenEmail(theUser, applicationUrl(request), verificationToken);
-        return "A new verification link has been sent to your email, please check to activate your account.";
+        return "linkSent";
     }
+
+    /*@GetMapping("/resend-verification-token")
+    public String resendVerificationToken(@RequestParam("token") String oldToken, final HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+        VerificationToken verificationToken = userService.generateNewVerificationToken(oldToken);
+        User theUser = verificationToken.getUser();
+        resendVerificationTokenEmail(theUser, applicationUrl(request), verificationToken);
+        return "A new verification link has been sent to your email, please check to activate your account.";
+    }*/
 
     private void resendVerificationTokenEmail(User theUser, String applicationUrl, VerificationToken verificationToken) throws MessagingException, UnsupportedEncodingException {
         String url = applicationUrl + "/register/verifyEmail?token=" + verificationToken.getToken();

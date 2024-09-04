@@ -35,7 +35,10 @@ public class SecurityConfig {
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error=true")
                         .permitAll()
                 )
                 .logout(logout ->
@@ -56,16 +59,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-
-    /*
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder auth = http.getSharedObject(AuthenticationManagerBuilder.class);
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        return auth.build();
-    }
-
-     */
 }
